@@ -8,6 +8,8 @@ int main() {
     cin >> s;
 
     cout << "-가 제거된 주민등록번호: ";
+
+    // '-' 제거 후 출력
     for (auto c : s) {
         if (c == '-') {
             continue;
