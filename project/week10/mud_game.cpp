@@ -9,6 +9,9 @@ const int mapY = 5;
 bool checkXY(int user_x, int mapX, int user_y, int mapY);
 void displayMap(int map[][mapX], int user_x, int user_y);
 bool checkGoal(int map[][mapX], int user_x, int user_y);
+void checkState(int map[][mapX], int user_x, int user_y);
+
+int HP = 20; // 유저의 체력
 
 // 메인  함수
 int main() {
@@ -24,11 +27,11 @@ int main() {
 	int user_x = 0; // 가로 번호
 	int user_y = 0; // 세로 번호
 
-	int HP = 20; // 유저의 체력
-	bool moved = false; // 유저가 이동했는지 여부
 
 	// 게임 시작 
 	while (1) { // 사용자에게 계속 입력받기 위해 무한 루프
+
+		bool moved = false; // 유저가 이동했는지 여부
 
 		// 사용자의 입력을 저장할 변수
 		string user_input = "";
@@ -46,7 +49,6 @@ int main() {
 			if (inMap == false) {
 				cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;
 				user_y += 1;
-				moved = false;
 			}
 			else {
 				cout << "위로 한 칸 올라갑니다." << endl;
@@ -61,10 +63,8 @@ int main() {
 			if (inMap == false) {
 				cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;
 				user_y -= 1;
-				moved = false;
 			}
 			else {
-				HP -= 1; // 이동 시 체력 소모
 				cout << "위로 한 칸 내려갑니다." << endl;
 				displayMap(map, user_x, user_y);
 				moved = true;
@@ -78,10 +78,8 @@ int main() {
 			if (inMap == false) {
 				cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;
 				user_x += 1;
-				moved = false;
 			}
 			else {
-				HP -= 1; // 이동 시 체력 소모
 				cout << "왼쪽으로 이동합니다." << endl;
 				displayMap(map, user_x, user_y);
 				moved = true;
@@ -94,10 +92,8 @@ int main() {
 			if (inMap == false) {
 				cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;
 				user_x -= 1;
-				moved = false;
 			}
 			else {
-				HP -= 1; // 이동 시 체력 소모
 				cout << "오른쪽으로 이동합니다." << endl;
 				displayMap(map, user_x, user_y);
 				moved = true;
@@ -119,16 +115,7 @@ int main() {
 		if (moved == true) {
 			HP -= 1; // 이동 시 체력 소모
 
-			// 적을 만나면 체력 2 감소
-			if (map[user_y][user_x] == 2) {
-				HP -= 2;
-				cout << "적이 있습니다. HP가 2 줄어듭니다." << endl;
-			}
-			// 포션을 만나면 체력 2 증가
-			else if (map[user_y][user_x] == 3) {
-				HP += 2;
-				cout << "포션이 있습니다. HP가 2 증가합니다." << endl;
-			}
+			checkState(map, user_x, user_y);
 
 			// 이동했을 때만 체력 체크
 			if (HP <= 0) {
@@ -200,4 +187,18 @@ bool checkGoal(int map[][mapX], int user_x, int user_y) {
 		return true;
 	}
 	return false;
+}
+
+// 무기/갑옷, 포션, 적을 만났을 때 그에 대한 메시지 출력
+void checkState(int map[][mapX], int user_x, int user_y) {
+	// 적을 만나면 체력 2 감소
+	if (map[user_y][user_x] == 2) {
+		HP -= 2;
+		cout << "적이 있습니다. HP가 2 줄어듭니다." << endl;
+	}
+	// 포션을 만나면 체력 2 증가
+	else if (map[user_y][user_x] == 3) {
+		HP += 2;
+		cout << "포션이 있습니다. HP가 2 증가합니다." << endl;
+	}
 }
