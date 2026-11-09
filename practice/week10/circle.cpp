@@ -13,8 +13,7 @@ class Circle {
 int main() {
 
     Circle* p = new Circle();
-    // const 객체를 가리키는 포인터 -> 고정
-    // 객체의 멤버 함수 중 const로 선언된 함수만 호출 가능
+    // const 객체를 가리키는 포인터 -> 고정된 객체를 가리키는 포인터
     const Circle *pConstObj = new Circle();
     Circle *const pConstPtr = new Circle();
 
@@ -24,6 +23,7 @@ int main() {
     
     p->SetRadius(30);
     // pConstObj->SetRadius(30);
+    // pConstObj는 const 객체를 가리키는 포인터이기 때문에 객체의 값을 변경할 수 없음
     pConstPtr->SetRadius(30);
 
     cout << "pRect->radius: " << p->GetRadius() << endl;
