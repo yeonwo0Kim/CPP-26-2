@@ -12,10 +12,13 @@ public:
     int GetHP();                  // 현재 체력 반환
     User();                       // 사용자 생성
 
+    virtual ~User() = default;
+
     // 아이템 개수 증가
     void IncreaseItemCnt();
 
-    void doAttack();
+    // 순수 가상 함수
+    virtual void doAttack() = 0;
 
     // 출력 연산자 중복 정의(오버로딩)
     // friend -> private 접근

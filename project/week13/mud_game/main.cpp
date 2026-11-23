@@ -24,19 +24,31 @@ int main() {
 					{0, 2, 3, 0, 0},
 					{3, 0, 0, 0, 2} };
 
+	// 직업 선택
+	int job;
+	
+	cout << "직업 선택 (1: Magician, 2: Warrior) : ";
+	cin >> job;
+	while (job != 1 && job != 2) {
+		cout << "다시 선택 : ";
+		cin >> job;
+	}
+
+
     // 두 유저 객체 생성
     Magician magician;
     Warrior warrior;
 
-    // 유저별 위치
-    int magician_x = 0;
-    int magician_y = 0;
+	User* user;
+	if (job == 1) {
+		user = &magician;
+	} else {
+		user = &warrior;
+	}
 
-    int warrior_x = 0;
-    int warrior_y = 0;
+	int user_x = 0;
+	int user_y = 0;
 
-    // 차례 관리
-    int turn = 0;
 
 	// 게임 시작 
 	while (1) { // 사용자에게 계속 입력받기 위해 무한 루프
@@ -45,29 +57,6 @@ int main() {
 
 		// 사용자의 입력을 저장할 변수
 		string user_input = "";
-
-        // 현재 차례의 유저
-        User* user;
-
-        int user_x;
-        int user_y;
-
-        if (turn % 2 == 0) {
-            user = &magician;
-            user_x = magician_x;
-            user_y = magician_y;
-
-            cout << endl;
-            cout << "= Magician 차례 =" << endl;
-        }
-        else {
-            user = &warrior;
-            user_x = warrior_x;
-            user_y = warrior_y;
-
-            cout << endl;
-            cout << "= Warrior 차례 =" << endl;
-        }
 
 		// 현재 체력 출력
         // user는 포인터 변수이기 때문에 ->로 접근
@@ -142,11 +131,7 @@ int main() {
             cout << *user << endl;
         }
         else if (user_input == "공격") {
-            if (turn % 2 == 0) {
-                magician.doAttack();
-            } else {
-                warrior.doAttack();
-            }
+			user->doAttack();
         }
 		else if (user_input == "종료") {
 			cout << "종료합니다.";
@@ -161,17 +146,6 @@ int main() {
 			user->DecreaseHP(1); // 이동 시 체력 소모
     
 			checkState(map, user_x, user_y, *user);
-
-            // magician, warrior 객체가 user 변수에 복사됨
-            // 이동하면 변경된 위치를 실제 객체의 위치에 저장
-            if (turn % 2 == 0) {
-                magician_x = user_x;
-                magician_y = user_y;
-            }
-            else {
-                warrior_x = user_x;
-                warrior_y = user_y;
-            }
 
             // 이동했을 때만 체력 체크
 			if (!checkUser(*user)) {
@@ -188,9 +162,6 @@ int main() {
 			cout << "게임을 종료합니다." << endl;
 			break;
 		}
-
-        // 다음 차례로
-        turn++;
 
 	}
 	return 0;
