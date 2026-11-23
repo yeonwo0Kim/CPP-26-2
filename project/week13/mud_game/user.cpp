@@ -27,9 +27,9 @@ void User::IncreaseItemCnt() {
 }
 
 // 부모 클래스의 doAttack
-// void User::doAttack() {
-//     cout << "공격합니다." << endl;
-// }
+void User::doAttack() {
+    cout << "공격합니다." << endl;
+}
 
 // Magician의 doAttack (오버라이딩)
 void Magician::doAttack() {
