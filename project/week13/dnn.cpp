@@ -173,7 +173,7 @@ public:
         return output;
     }
     string getName() const override{
-        return "Sigmoid";
+        return "Heaviside";
     }
 };
 
@@ -220,14 +220,14 @@ int main()
     // ReLU Layer
     network.push_back(new ReLU());
 
+    // Heaviside Layer
+    // network.push_back(new Heaviside());
+
     // 두 번째 Dense Layer
     network.push_back(new Dense(weights2, bias2));
 
     // Sigmoid Layer
     network.push_back(new Sigmoid());
-
-    // Heaviside Layer
-    // network.push_back(new Heaviside());
 
     // 5. Forward Propagation
     vector<double> output = input;
